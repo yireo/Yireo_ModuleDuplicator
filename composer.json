@@ -1,0 +1,24 @@
+{
+    "name": "yireo/magento2-module-duplicator",
+    "version": "1.0.0",
+    "description": "N/A",
+    "keywords": [
+        "dev"
+    ],
+    "type": "magento2-module",
+    "require": {
+        "symfony/finder": "*",
+        "magento/framework": "*"
+    },
+    "license": [
+        "Open Software License (OSL)"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Yireo\\ModuleDuplicator\\": ""
+        }
+    }
+}
