@@ -5,6 +5,7 @@
             <argument name="commands" xsi:type="array">
                 <item name="Yireo_ModuleDuplicator::listTemplates" xsi:type="object">Yireo\ModuleDuplicator\Console\Command\ListTemplatesCommand</item>
                 <item name="Yireo_ModuleDuplicator::createModule" xsi:type="object">Yireo\ModuleDuplicator\Console\Command\CreateModuleCommand</item>
+                <item name="Yireo_ModuleDuplicator::updateComposerJson" xsi:type="object">Yireo\ModuleDuplicator\Console\Command\UpdateComposerJsonCommand</item>
             </argument>
         </arguments>
     </type>
