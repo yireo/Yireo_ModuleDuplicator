@@ -7,8 +7,10 @@
     ],
     "type": "magento2-module",
     "require": {
-        "symfony/finder": "*",
-        "magento/framework": "*"
+        "symfony/finder": "^5.0|^6.0",
+        "magento/framework": "^103.0",
+        "ext-json": "*",
+        "ext-pcre": "*"
     },
     "license": [
         "Open Software License (OSL)"
