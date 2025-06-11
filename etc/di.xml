@@ -9,4 +9,15 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="Yireo\ModuleDuplicator\Service\TemplateModuleListing">
+        <arguments>
+            <argument name="templates" xsi:type="array">
+                <item name="Yireo_Empty" xsi:type="string">Yireo_Empty</item>
+                <item name="Yireo_LokiCheckoutEmpty" xsi:type="string">Yireo_LokiCheckoutEmpty</item>
+                <item name="Yireo_LokiCheckoutEmptyPayment" xsi:type="string">Yireo_LokiCheckoutEmptyPayment</item>
+                <item name="Yireo_LokiCheckoutEmptyShipment" xsi:type="string">Yireo_LokiCheckoutEmptyShipment</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

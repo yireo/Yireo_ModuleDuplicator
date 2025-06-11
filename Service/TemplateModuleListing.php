@@ -5,13 +5,14 @@ namespace Yireo\ModuleDuplicator\Service;
 class TemplateModuleListing
 {
     public function __construct(
-        array $templates = []
+        private array $templates = []
     ) {
     }
 
     public function getAll(): array
     {
         return [
+            'Yireo_Empty',
             'Yireo_LokiCheckoutEmpty',
             'Yireo_LokiCheckoutEmptyPayment',
             'Yireo_LokiCheckoutEmptyShipment',
