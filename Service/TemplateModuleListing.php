@@ -13,9 +13,9 @@ class TemplateModuleListing
     {
         return [
             'Yireo_Empty',
-            'Yireo_LokiCheckoutEmpty',
-            'Yireo_LokiCheckoutEmptyPayment',
-            'Yireo_LokiCheckoutEmptyShipment',
+            'LokiCheckout_Empty',
+            'LokiCheckout_EmptyPayment',
+            'LokiCheckout_EmptyShipment',
         ];
     }
 }
