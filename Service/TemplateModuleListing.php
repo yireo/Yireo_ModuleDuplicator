@@ -11,11 +11,6 @@ class TemplateModuleListing
 
     public function getAll(): array
     {
-        return [
-            'Yireo_Empty',
-            'LokiCheckout_Empty',
-            'LokiCheckout_EmptyPayment',
-            'LokiCheckout_EmptyShipment',
-        ];
+        return $this->templates;
     }
 }

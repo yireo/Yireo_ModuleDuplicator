@@ -1,14 +1,16 @@
 {
     "name": "yireo/magento2-module-duplicator",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "N/A",
     "keywords": [
         "dev"
     ],
     "type": "magento2-module",
     "require": {
-        "symfony/finder": "*",
-        "magento/framework": "*"
+        "symfony/finder": "^5.0|^6.0",
+        "magento/framework": "^103.0",
+        "ext-json": "*",
+        "ext-pcre": "*"
     },
     "license": [
         "OSL-3.0"
