@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 22 October 2025
+### Fixed
+- Change Loki templates
+- Fix license
+- Make templates DI configurable
+
 ## [1.0.1] - 17 May 2025
 ### Fixed
 - Remove hard dep with LokiChedckout
