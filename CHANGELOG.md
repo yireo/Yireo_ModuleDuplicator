@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3] - 13 June 2026
+### Fixed
+- Bump symfony/finder to 7.0
+
 ## [1.0.2] - 22 October 2025
 ### Fixed
 - Change Loki templates
