@@ -2,6 +2,7 @@
 
 namespace Yireo\ModuleDuplicator\Service;
 
+use InvalidArgumentException;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Component\ComponentRegistrar;
 use Symfony\Component\Finder\Finder;
@@ -18,17 +19,17 @@ class ModuleCreator
     public function create(string $moduleName, string $templateModuleName): void
     {
         if ($this->componentRegistrar->getPath(ComponentRegistrar::MODULE, $moduleName)) {
-            //throw new \InvalidArgumentException('Module name already exists');
+            throw new InvalidArgumentException('Module name already exists');
         }
 
         $templateModules = $this->templateModuleListing->getAll();
         if (!in_array($templateModuleName, $templateModules)) {
-            throw new \InvalidArgumentException('Template code does not exist');
+            throw new InvalidArgumentException('Template code does not exist');
         }
 
         $templatePath = $this->componentRegistrar->getPath(ComponentRegistrar::MODULE, $templateModuleName);
         if (empty($templatePath)) {
-            throw new \InvalidArgumentException('Template module does not exist');
+            throw new InvalidArgumentException('Template module does not exist');
         }
 
         $targetContext = $this->moduleContextFactory->create([
@@ -50,7 +51,11 @@ class ModuleCreator
             $absoluteSourcePath = $file->getRealPath();
 
             $sourceContents = file_get_contents($absoluteSourcePath);
-            $targetContents = $this->parse($sourceContents, $sourceContext, $targetContext);
+            $targetContents = $this->parseStrings($sourceContents, $sourceContext, $targetContext);
+
+            if ($file->getRelativePathname() === 'composer.json') {
+                $targetContents = $this->parseComposer($targetContents);
+            }
 
             $dirName = dirname($absoluteTargetPath);
             if (!is_dir($dirName)) {
@@ -61,7 +66,7 @@ class ModuleCreator
         }
     }
 
-    private function parse(string $contents, ModuleContext $sourceContext, ModuleContext $targetContext): string
+    private function parseStrings(string $contents, ModuleContext $sourceContext, ModuleContext $targetContext): string
     {
         $contents = str_replace($sourceContext->getVendorName(), $targetContext->getVendorName(), $contents);
         $contents = str_replace($sourceContext->getPackageName(), $targetContext->getPackageName(), $contents);
@@ -69,5 +74,18 @@ class ModuleCreator
         $contents = str_replace($sourceContext->getNamespace(), $targetContext->getNamespace(), $contents);
 
         return $contents;
+    }
+
+    private function parseComposer(string $contents): string
+    {
+        $data = json_decode($contents, true);
+
+        if (isset($data['keywords'])) {
+            if (in_array('dev', $data['keywords'])) {
+                unset($data['keywords']);
+            }
+        }
+
+        return json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
     }
 }
