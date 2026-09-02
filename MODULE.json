@@ -7,9 +7,10 @@
     "module_name": "Yireo_ModuleDuplicator",
     "composer_name": "yireo/magento2-module-duplicator",
     "php_versions": [
-        "8.1",
         "8.2",
-        "8.3"
+        "8.3",
+        "8.4",
+        "8.5"
     ],
     "skip_magento_versions": [],
     "skip_css_utils": false,

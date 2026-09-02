@@ -10,7 +10,8 @@
         "ext-json": "*",
         "ext-pcre": "*",
         "magento/framework": "^103.0",
-        "symfony/finder": "^5.0|^6.0|^7.0"
+        "symfony/finder": "^5.0|^6.0|^7.0",
+        "php": ">=8.2 <8.6"
     },
     "license": [
         "OSL-3.0"
