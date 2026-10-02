@@ -24,12 +24,12 @@ class ModuleCreator
 
         $templateModules = $this->templateModuleListing->getAll();
         if (!in_array($templateModuleName, $templateModules)) {
-            throw new InvalidArgumentException('Template code does not exist');
+            throw new InvalidArgumentException("Template code \"$templateModuleName\" does not exist");
         }
 
         $templatePath = $this->componentRegistrar->getPath(ComponentRegistrar::MODULE, $templateModuleName);
         if (empty($templatePath)) {
-            throw new InvalidArgumentException('Template module does not exist');
+            throw new InvalidArgumentException("Template module \"$templateModuleName\" is not found");
         }
 
         $targetContext = $this->moduleContextFactory->create([
