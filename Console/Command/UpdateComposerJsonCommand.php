@@ -44,7 +44,7 @@ class UpdateComposerJsonCommand extends Command
             return Command::FAILURE;
         }
 
-        $keywords = explode(',', trim((string)$input->getOption('keywords')), -1);
+        $keywords = explode(',', trim((string)$input->getOption('keywords'), " \n\r\t\v\0"), -1);
         if (!empty($keywords)) {
             $composerData['keywords'] =  $keywords;
         }
