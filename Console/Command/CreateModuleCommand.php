@@ -2,6 +2,8 @@
 
 namespace Yireo\ModuleDuplicator\Console\Command;
 
+use InvalidArgumentException;
+use Magento\Framework\App\State;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,7 +13,8 @@ use Yireo\ModuleDuplicator\Service\ModuleCreator;
 class CreateModuleCommand extends Command
 {
     public function __construct(
-        private ModuleCreator $moduleCreator,
+        private readonly ModuleCreator $moduleCreator,
+        private readonly State $appState,
         ?string $name = null,
     ) {
         parent::__construct($name);
@@ -27,9 +30,20 @@ class CreateModuleCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        if ($this->appState->getMode() === State::MODE_PRODUCTION) {
+            $output->writeln('<error>This command is not available in production mode</error>');
+            return Command::FAILURE;
+        }
+
         $moduleName = (string)$input->getArgument('module');
         $templateModuleName = (string)$input->getArgument('template');
-        $this->moduleCreator->create($moduleName, $templateModuleName);
+
+        try {
+            $this->moduleCreator->create($moduleName, $templateModuleName);
+        } catch (InvalidArgumentException $exception) {
+            $output->writeln('<error>' . $exception->getMessage() . '</error>');
+            return Command::FAILURE;
+        }
 
         return Command::SUCCESS;
     }
