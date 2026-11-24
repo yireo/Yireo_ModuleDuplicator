@@ -2,16 +2,24 @@
 
 namespace Yireo\ModuleDuplicator\Service;
 
+use InvalidArgumentException;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Component\ComponentRegistrar;
 
 class ModuleContext
 {
+    private const MODULE_NAME_PATTERN = '/^[A-Z][A-Za-z0-9]*_[A-Z][A-Za-z0-9]*$/D';
+
     public function __construct(
-        private DirectoryList $directoryList,
-        private ComponentRegistrar $componentRegistrar,
-        private string $moduleName,
+        private readonly DirectoryList $directoryList,
+        private readonly ComponentRegistrar $componentRegistrar,
+        private readonly string $moduleName,
     ) {
+        if (!preg_match(self::MODULE_NAME_PATTERN, $moduleName)) {
+            throw new InvalidArgumentException(
+                'Invalid module name "' . $moduleName . '": Use the format "Vendor_Package" (letters and digits only)'
+            );
+        }
     }
 
     public function getModuleName(): string
@@ -21,36 +29,42 @@ class ModuleContext
 
     public function getNamespace(): string
     {
-        return '\\'.str_replace('_', '\\', $this->moduleName).'\\';
+        return $this->getVendorName() . '\\' . $this->getPackageName();
     }
 
     public function getKebabCaseName(): string
     {
-        $pattern = '/(?<=\\w)(?=[A-Z])|(?<=[a-z])(?=[0-9])/';
-        return strtolower(preg_replace($pattern, '-', $this->getPackageName()));
+        return $this->toKebabCase($this->getPackageName());
+    }
+
+    public function getComposerName(): string
+    {
+        return $this->toKebabCase($this->getVendorName()) . '/magento2-' . $this->getKebabCaseName();
     }
 
     public function getVendorName(): string
     {
-        $parts = explode('_', $this->getModuleName());
-
-        return $parts[0];
+        return explode('_', $this->moduleName)[0];
     }
 
     public function getPackageName(): string
     {
-        $parts = explode('_', $this->getModuleName());
-
-        return $parts[1];
+        return explode('_', $this->moduleName)[1];
     }
 
     public function getModulePath(): string
     {
-        $path = $this->componentRegistrar->getPath(ComponentRegistrar::MODULE, $this->getModuleName());
+        $path = $this->componentRegistrar->getPath(ComponentRegistrar::MODULE, $this->moduleName);
         if (!empty($path)) {
             return $path;
         }
 
-        return $this->directoryList->getRoot().'/app/code/'.$this->getVendorName().'/'.$this->getPackageName();
+        return $this->directoryList->getRoot() . '/app/code/' . $this->getVendorName() . '/' . $this->getPackageName();
+    }
+
+    private function toKebabCase(string $name): string
+    {
+        $pattern = '/(?<=\\w)(?=[A-Z])|(?<=[a-z])(?=[0-9])/';
+        return strtolower((string)preg_replace($pattern, '-', $name));
     }
 }
