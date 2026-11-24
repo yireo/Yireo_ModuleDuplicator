@@ -19,3 +19,23 @@
 ![Playwright](https://img.shields.io/github/actions/workflow/status/yireo/Yireo_ModuleDuplicator/playwright.yml?label=playwright)
 ![DI Compilation](https://img.shields.io/github/actions/workflow/status/yireo/Yireo_ModuleDuplicator/compile.yml?label=compile)
 <!-- badges.test.end -->
+
+## Installation
+This module is a development tool. Install it as a development dependency only:
+
+```bash
+composer require --dev yireo/magento2-module-duplicator
+bin/magento module:enable Yireo_ModuleDuplicator
+```
+
+The commands that write files refuse to run in production mode.
+
+## Usage
+```bash
+bin/magento yireo:module-duplicator:list-templates
+bin/magento yireo:module-duplicator:create Vendor_Package Yireo_Empty
+bin/magento yireo:module-duplicator:update-composer-json Vendor_Package --keywords=foo,bar
+```
+
+Module names must use the format `Vendor_Package` (letters and digits only, both parts starting with an uppercase letter).
+Keywords may only contain lowercase letters, digits and dashes.
