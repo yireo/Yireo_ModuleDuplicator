@@ -3,7 +3,11 @@
     "modules": [],
     "components": [],
     "config": [],
-    "tests": [],
+    "tests": {
+        "unit": 16,
+        "integration": 9,
+        "functional": 0
+    },
     "module_name": "Yireo_ModuleDuplicator",
     "composer_name": "yireo/magento2-module-duplicator",
     "php_versions": [
